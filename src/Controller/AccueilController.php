@@ -6,7 +6,9 @@ use App\Entity\Livre;
 use App\Form\SearchAuteurType;
 use App\Form\SearchGenreType;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,7 +21,7 @@ class AccueilController extends AbstractController
     }
 
     #[Route('/', name: 'accueil')]
-    public function index(): Response
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
         $form = $this->createForm(SearchGenreType::class);
         $form2 = $this->createForm(SearchAuteurType::class);
@@ -27,8 +29,10 @@ class AccueilController extends AbstractController
         $repo = $this->entityManager->getRepository(Livre::class);
         $livres = $repo->findAll();
 
+        $livrespages = $paginator->paginate($livres,$request->query->getInt('page', 1),20);
+
         return $this->render('accueil/index.html.twig', [
-            'livres' => $livres,
+            'livres' => $livrespages,
             'form'=>$form->createView(),
             'form2'=>$form2->createView()
         ]);
