@@ -23,7 +23,7 @@ class AccueilController extends AbstractController
         $livres = $repo->findAll();
 
         return $this->render('accueil/index.html.twig', [
-            'controller_name' => 'AccueilController',
+            'livres' => $livres
         ]);
     }
 
