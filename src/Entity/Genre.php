@@ -18,6 +18,7 @@ class Genre
     #[ORM\Column(type: 'string', length: 255)]
     private $nom;
 
+
     #[ORM\ManyToMany(targetEntity: Livre::class, inversedBy: 'genres')]
     private $livres;
 
@@ -29,6 +30,10 @@ class Genre
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString() {
+        return $this->getNom();
     }
 
     public function getNom(): ?string

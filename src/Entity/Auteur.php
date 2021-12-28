@@ -40,6 +40,10 @@ class Auteur
         return $this->id;
     }
 
+    public function __toString() {
+        return $this->getNomPrenom();
+    }
+
     public function getNomPrenom(): ?string
     {
         return $this->nom_prenom;
