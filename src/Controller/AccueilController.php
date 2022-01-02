@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Search;
 use App\Entity\Livre;
 use App\Form\SearchAuteurType;
 use App\Form\SearchGenreType;
@@ -23,18 +24,33 @@ class AccueilController extends AbstractController
     #[Route('/', name: 'accueil')]
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
-        $form = $this->createForm(SearchGenreType::class);
-        $form2 = $this->createForm(SearchAuteurType::class);
 
-        $repo = $this->entityManager->getRepository(Livre::class);
-        $livres = $repo->findAll();
+
+
+        $search = new Search();
+        $formGenre = $this->createForm(SearchGenreType::class, $search);
+        $formAuteur = $this->createForm(SearchAuteurType::class, $search);
+
+        $formGenre->handleRequest($request);
+        $formAuteur->handleRequest($request);
+        if($formGenre->isSubmitted() && $formGenre->isValid()){
+            $livres = $this->entityManager->getRepository(Livre::class)->findWithSearchGenre($search);
+        }
+        elseif ($formAuteur->isSubmitted() && $formAuteur->isValid()){
+            $livres = $this->entityManager->getRepository(Livre::class)->findWithSearchAuteur($search);
+        }
+        else{
+            $livres = $this->entityManager->getRepository(Livre::class)->findAll();
+        }
+
+
 
         $livrespages = $paginator->paginate($livres,$request->query->getInt('page', 1),20);
 
         return $this->render('accueil/index.html.twig', [
             'livres' => $livrespages,
-            'form'=>$form->createView(),
-            'form2'=>$form2->createView()
+            'formGenre'=>$formGenre->createView(),
+            'formAuteur'=>$formAuteur->createView()
         ]);
     }
 

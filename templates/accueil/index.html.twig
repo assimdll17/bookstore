@@ -5,10 +5,10 @@
 
         <h3>Filtrer</h3>
         <div class="mb-3">
-        {{ form(form) }}
+        {{ form(formGenre) }}
         </div>
         <div>
-            {{ form(form2) }}
+            {{ form(formAuteur) }}
         </div>
     </div>
 
@@ -16,7 +16,7 @@
  <h1>Nos livres</h1>
   <div class="row mt-2" >
 {% for livre in livres %}
-  <div class="col-md-4">
+  <div class="col-md-4 mt-4">
      <div class="livre-items">
        <h5>ISBN : {{ livre.isbn }}</h5>
        <h5>Titre : {{ livre.titre }}</h5>
