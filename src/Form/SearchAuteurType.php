@@ -36,7 +36,8 @@ class SearchAuteurType extends AbstractType
         $resolver->setDefaults([
                 'data_class'=>Search::class,
                 'method' => 'GET',
-                'crsf_protection' => false,
+                'csrf_protection' => false,
+                'allow_extra_fields' => true,
         ]);
     }
 

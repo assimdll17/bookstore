@@ -6,6 +6,8 @@ use App\Classe\Search;
 use App\Entity\Livre;
 use App\Form\SearchAuteurType;
 use App\Form\SearchGenreType;
+use App\Form\SearchMotCleType;
+use App\Form\SearchNoteType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,24 +27,27 @@ class AccueilController extends AbstractController
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
 
+        $livres = $this->entityManager->getRepository(Livre::class)->findAll();
 
 
-        $search = new Search();
+        $search = new Search();       $search2 = new Search();
+
         $formGenre = $this->createForm(SearchGenreType::class, $search);
-        $formAuteur = $this->createForm(SearchAuteurType::class, $search);
+        $formAuteur = $this->createForm(SearchAuteurType::class, $search2);
+        $formMC = $this->createForm(SearchMotCleType::class);
+        $formNote = $this->createForm(SearchNoteType::class);
+
+
 
         $formGenre->handleRequest($request);
-        $formAuteur->handleRequest($request);
         if($formGenre->isSubmitted() && $formGenre->isValid()){
             $livres = $this->entityManager->getRepository(Livre::class)->findWithSearchGenre($search);
         }
-        elseif ($formAuteur->isSubmitted() && $formAuteur->isValid()){
-            $livres = $this->entityManager->getRepository(Livre::class)->findWithSearchAuteur($search);
-        }
-        else{
-            $livres = $this->entityManager->getRepository(Livre::class)->findAll();
-        }
 
+        $formAuteur->handleRequest($request);
+        if ($formAuteur->isSubmitted() && $formAuteur->isValid()){
+            $livres = $this->entityManager->getRepository(Livre::class)->findWithSearchAuteur($search2);
+        }
 
 
         $livrespages = $paginator->paginate($livres,$request->query->getInt('page', 1),20);
@@ -50,7 +55,9 @@ class AccueilController extends AbstractController
         return $this->render('accueil/index.html.twig', [
             'livres' => $livrespages,
             'formGenre'=>$formGenre->createView(),
-            'formAuteur'=>$formAuteur->createView()
+            'formAuteur'=>$formAuteur->createView(),
+            'formMC'=>$formMC->createView(),
+            'formNote'=>$formNote->createView()
         ]);
     }
 
