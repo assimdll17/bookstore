@@ -58,6 +58,40 @@ class LivreRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    /**
+     * @return Livre[]
+     */
+    public function findWithSearchMC(Search $search){
+        $query = $this
+            ->createQueryBuilder('l')
+            ->select( 'l');
+
+        if (!empty($search->string)) {
+            $query = $query
+                ->andWhere('l.titre LIKE :string')
+                ->setParameter('string', "%{$search->string}%");
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * @return Livre[]
+     */
+    public function findWithSearchNote(Search $search){
+        $query = $this
+            ->createQueryBuilder('l')
+            ->select( 'l');
+
+        if (!empty($search->string)) {
+            $query = $query
+                ->andWhere('l.note = :string')
+                ->setParameter('string', "{$search->string}");
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Livre[] Returns an array of Livre objects
     //  */

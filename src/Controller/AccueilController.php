@@ -34,14 +34,26 @@ class AccueilController extends AbstractController
 
         $formGenre = $this->createForm(SearchGenreType::class, $search);
         $formAuteur = $this->createForm(SearchAuteurType::class, $search2);
-        $formMC = $this->createForm(SearchMotCleType::class);
-        $formNote = $this->createForm(SearchNoteType::class);
+        $formMC = $this->createForm(SearchMotCleType::class, $search);
+        $formNote = $this->createForm(SearchNoteType::class, $search);
 
 
 
         $formGenre->handleRequest($request);
         if($formGenre->isSubmitted() && $formGenre->isValid()){
             $livres = $this->entityManager->getRepository(Livre::class)->findWithSearchGenre($search);
+        }
+
+
+        $formMC->handleRequest($request);
+        if($formMC->isSubmitted() && $formMC->isValid()){
+            $livres = $this->entityManager->getRepository(Livre::class)->findWithSearchMC($search);
+        }
+
+
+        $formNote->handleRequest($request);
+        if($formNote->isSubmitted() && $formNote->isValid()){
+            $livres = $this->entityManager->getRepository(Livre::class)->findWithSearchNote($search);
         }
 
         $formAuteur->handleRequest($request);
