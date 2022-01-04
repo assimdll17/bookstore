@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail d'un livre{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="container" style="text-align: center; margin: 0 auto;">
+        ISBN du livre :  {{ livre.isbn }} <br>
+        Titre du livre : {{ livre.titre }}<br>
+        Date de publication : {{ livre.dateDeParution | date('d/m/Y')  }}<br>
+        <hr>
+        Ce livre de <strong>{{ livre.nombrePages }} </strong> pages a comme auteurs: <br>
+
+        {% for auteur in  livre.auteurs  %}
+            <a href="/affiche/auteur/{{ auteur.id }}">{{ auteur.nomPrenom }}</a> <br>
+        {% endfor %}
+        <hr>
+        Les genres auxquels ce livre appartient sont: <br>
+        {% for genre  in  livre.genres  %}
+            {{ genre.nom }}<br>
+        {% endfor %}
+        <hr>
+        Les utilisateurs ont donné une note de <strong>{{ livre.note }}</strong>/20.
+
+    </div>
+</div>
+{% endblock %}
