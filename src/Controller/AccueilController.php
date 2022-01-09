@@ -62,7 +62,7 @@ class AccueilController extends AbstractController
         }
 
 
-        $livrespages = $paginator->paginate($livres,$request->query->getInt('page', 1),20);
+        $livrespages = $paginator->paginate($livres,$request->query->getInt('page', 1),15);
 
         return $this->render('accueil/index.html.twig', [
             'livres' => $livrespages,
