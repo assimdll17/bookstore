@@ -6,16 +6,16 @@
 <div class="row">
     <div class="container" style="text-align: center; margin: 0 auto;">
          <strong>Informations sur l'auteur :</strong> <br>
-          Nom et Prénom : {{ auteur.nomPrenom }} <br>
-          Sexe : {{ auteur.sexe }}<br>
-          Date de naissance : {{ auteur.dateDeNaissance | date('d/m/Y') }} <br>
+          Nom et Prénom : <strong>{{ auteur.nomPrenom }}</strong> <br>
+          Sexe : <strong>{{ auteur.sexe }}</strong><br>
+          Date de naissance : <strong>{{ auteur.dateDeNaissance | date('d/m/Y') }}</strong> <br>
         <hr>
-          Nationalité : {{ auteur.nationalite }}
+          Nationalité : <strong>{{ auteur.nationalite }}</strong>
         <hr>
         <strong>Bibliographie :</strong>  <br>
         <ul>
         {% for liv  in  auteur.livre  %}
-        <li><a href="/affiche/livre/{{ liv.id }}"> {{ liv.titre }} </a>    publié   le {{ liv.dateDeParution | date('d/m/Y') }}<br></li>
+        <li><a href="/affiche/livre/{{ liv.id }}"> <strong>{{ liv.titre }} </strong></a>    publié   le <strong>{{ liv.dateDeParution | date('d/m/Y') }}</strong><br></li>
         {% endfor %}
         </ul>
     </div>

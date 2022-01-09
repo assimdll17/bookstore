@@ -5,22 +5,22 @@
 {% block content %}
 <div class="row">
     <div class="container" style="text-align: center; margin: 0 auto;">
-        ISBN du livre :  {{ livre.isbn }} <br>
-        Titre du livre : {{ livre.titre }}<br>
-        Date de publication : {{ livre.dateDeParution | date('d/m/Y')  }}<br>
+        ISBN du livre : <strong>{{ livre.isbn }}</strong>  <br>
+        Titre du livre : <strong>{{ livre.titre }}</strong><br>
+        Date de publication : <strong>{{ livre.dateDeParution | date('d/m/Y')  }}</strong> <br>
         <hr>
-        Ce livre de <strong>{{ livre.nombrePages }} </strong> pages a comme auteurs: <br>
+        Ce livre de <strong>{{ livre.nombrePages }}  pages </strong> a comme auteurs: <br>
 
         {% for auteur in  livre.auteurs  %}
-            <a href="/affiche/auteur/{{ auteur.id }}">{{ auteur.nomPrenom }}</a> <br>
+            <a href="/affiche/auteur/{{ auteur.id }}"> <strong>{{ auteur.nomPrenom }}</strong></a> <br>
         {% endfor %}
         <hr>
         Les genres auxquels ce livre appartient sont: <br>
         {% for genre  in  livre.genres  %}
-            {{ genre.nom }}<br>
+            <strong>{{ genre.nom }}</strong><br>
         {% endfor %}
         <hr>
-        Les utilisateurs ont donné une note de <strong>{{ livre.note }}</strong>/20.
+        Les utilisateurs ont donné une note de <strong>{{ livre.note }}/20</strong>.
 
     </div>
 </div>
