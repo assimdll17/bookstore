@@ -4,9 +4,13 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * @method string getUserIdentifier()
+ */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -14,13 +18,13 @@ class User
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $nom;
+    private $firstName;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $prenom;
+    private $lastName;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $role;
+    #[ORM\Column(type: 'json')]
+    private $roles = [];
 
     #[ORM\Column(type: 'string', length: 255)]
     private $email;
@@ -33,38 +37,42 @@ class User
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getFirstName(): ?string
     {
-        return $this->nom;
+        return $this->firstName;
     }
 
-    public function setNom(string $nom): self
+    public function setFirstName(string $nom): self
     {
-        $this->nom = $nom;
+        $this->firstName = $nom;
 
         return $this;
     }
 
-    public function getPrenom(): ?string
+    public function getLastName(): ?string
     {
-        return $this->prenom;
+        return $this->lastName;
     }
 
-    public function setPrenom(string $prenom): self
+    public function setLastName(string $prenom): self
     {
-        $this->prenom = $prenom;
+        $this->lastName = $prenom;
 
         return $this;
     }
 
-    public function getRole(): ?string
+    public function getRoles(): ?array
     {
-        return $this->role;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
-    public function setRole(string $role): self
+    public function setRoles(string $role): self
     {
-        $this->role = $role;
+        $this->roles = $role;
 
         return $this;
     }
@@ -91,5 +99,30 @@ class User
         $this->password = $password;
 
         return $this;
+    }
+
+    /*$public function getRoles()
+    {
+        // TODO: Implement getRoles() method.
+    }*/
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function __call(string $name, array $arguments)
+    {
+        // TODO: Implement @method string getUserIdentifier()
     }
 }
