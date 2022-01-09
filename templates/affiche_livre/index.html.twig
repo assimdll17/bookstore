@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détail d'un livre{% endblock %}
+{% block title %}Détails d'un livre | Bookstore{% endblock %}
 
 {% block content %}
 <div class="row">
-    <div class="container" style="text-align: center; margin: 0 auto;">
+    <div class="col-md-2"></div>
+    <div class="container col-md-8" style="text-align: center; margin: 0 auto;">
         ISBN du livre : <strong>{{ livre.isbn }}</strong>  <br>
         Titre du livre : <strong>{{ livre.titre }}</strong><br>
         Date de publication : <strong>{{ livre.dateDeParution | date('d/m/Y')  }}</strong> <br>
@@ -21,7 +22,8 @@
         {% endfor %}
         <hr>
         Les utilisateurs ont donné une note de <strong>{{ livre.note }}/20</strong>.
-
     </div>
+    <div class="col-md-2"></div>
+
 </div>
 {% endblock %}
