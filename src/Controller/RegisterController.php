@@ -30,7 +30,7 @@ class RegisterController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $user=$form->getData();
-            //$user->setRoles("ROLE_USER");
+            $user->setRoles(["ROLE_USER"]);
             $passw = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($passw);
             $this->entityManager->persist($user);
