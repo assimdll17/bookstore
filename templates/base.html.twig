@@ -52,7 +52,10 @@
 
             {% if app.user %}
              <div style="color: white">
-                <a href="" style="color: white">Mon compte ({{ app.user.lastname }}) </a> | <a href="{{ path('app_logout') }}" style="color: white">Déconnexion</a>
+                <a href="" style="color: white">Mon compte ({{ app.user.lastname }}) </a> | <a href="{{ path('app_logout') }}" style="color: white">Déconnexion</a><br>
+                 {% if is_granted('ROLE_ADMIN') %}
+                     <small><a href="/admin" style="color: white">Vous administrateur, accéder à la partie admin ?</a></small><br/>
+                 {% endif %}
             </div>
             {% else %}
             <div style="color: #f0f0f0">
