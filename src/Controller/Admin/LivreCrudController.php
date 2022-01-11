@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Livre;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
@@ -26,8 +27,11 @@ class LivreCrudController extends AbstractCrudController
             NumberField::new('nombre_pages'),
             DateField::new('date_de_parution'),
             NumberField::new('note'),
-            CollectionField::new('auteurs'),
-            CollectionField::new('genres'),
+           // CollectionField::new('auteurs'),
+            AssociationField::new('auteurs'),
+            AssociationField::new('genres'),
+
+            //   CollectionField::new('genres'),
         ];
     }
 
